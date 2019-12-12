@@ -54,7 +54,7 @@ namespace :import do
     counter = 0
     csv.each do |row|
       counter = counter + 1
-      if counter > 0
+      if counter > 11533
 
         sp = LaneSpeed.new
         ct = LaneCount.new
