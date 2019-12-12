@@ -82,37 +82,43 @@
       document.getElementById("bounding_box_latitude_2_box").value = sw.lat();
       document.getElementById("bounding_box_longitude_1_box").value = sw.lng();
       document.getElementById("bounding_box_longitude_2_box").value = ne.lng();
+
+     
     }
   </script>
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
   </script>
 </head>
 
-
-
-<div id="map" class="container">
-  <div class="col-md-10">
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUXXnvUe-InS25W8HjSp-IH1CKRIIzSx4&libraries=places&callback=initMap">
-    </script>
-  </div>
+<div class="col-md-8 offset-md-2 mx-auto">
+<h2>
+  Add a new request for <strong>Traffic Data</strong>
+</h2>
 </div>
 
-<br><br>
 
-<div class="row mb-3">
-  <div class="col-md-8 offset-md-2">
-    <h2>
-      Add a new request for Vehicle speed data
-    </h2>
-
+<div class="row h-100">
+  <div class="col-md-4  offset-md-2">
     <form action="/insert_request" method="post">
       <div class="form-group">
-        <label for="begin_time_box">
-          Begin time
+        <label for="which_data_id">
+          Select type of data
         </label>
 
-        <input type="time" id="begin_time_box" name="begin_time_from_query" class="form-control">
+        <select class="form-control" id="which_data_id" name="which_data_from_query">
+          <option selected="selected" value="1">Speed</option>
+          <option value="2">Count</option>
+          <option value="3">Speed and Count</option>
+          
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="begin_time_box">
+          Start time
+        </label>
+
+        <input type="time" id="begin_time_box" name="begin_time_from_query" class="form-control" min="00:00" max="24:00" value="00:00">
       </div>
 
       <div class="form-group">
@@ -120,7 +126,7 @@
           End time
         </label>
 
-        <input type="time" id="end_time_box" name="end_time_from_query" class="form-control">
+        <input type="time" id="end_time_box" name="end_time_from_query" class="form-control" min="00:00" max="24:00" value="01:00">
       </div>
 
       <div class="form-group">
@@ -151,7 +157,7 @@
         <div class="form-row">
           <div class="col">
             <label for="bounding_box_latitude_1_box">
-              Bounding box <br>
+              Select using the map<br>
               Latitude: North 
             </label>
 
@@ -187,55 +193,18 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="sensor_id_box">
-          Sensor List
-        </label>
-        <select class="form-control" id="sensor_id_box" name="sensor_id_from_query"  onchange="singleSelectChangeText()">
-          <option value="" selected disabled hidden>Choose here</option>
-          <% i=0 %>
-          <% @sensors.all.each do |thesensor| %>
-            <option value="<%= thesensor.sensor_name %>"><%= thesensor.sensor_name %></option>
-          <% end %>
-        </select>
-
-      </div>
-
-      
       <button class="btn btn-block btn-outline-secondary">
         Create request
       </button>
     </form>
   </div>
-</div>
 
-<!--
-<div id="map" class="col-md-4">
+  <div id="map" class="col-md-5">
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78&libraries=places&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUXXnvUe-InS25W8HjSp-IH1CKRIIzSx4&libraries=places&callback=initMap">
     </script>
   </div>
 
+
   
-      
-      // Create an array of alphabetical characters used to label the markers.
-      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-      // Add some markers to the map.
-      // Note: The code uses the JavaScript Array.prototype.map() method to
-      // create an array of markers based on a given "locations" array.
-      // The map() method here has nothing to do with the Google Maps API.
-
-      var markers = locations.map(function(location, i) {
-        return new google.maps.Marker({
-          position: location,
-          label: labels[i % labels.length]
-        });
-      });
-
-      // Add a marker clusterer to manage the markers.
-      var markerCluster = new MarkerClusterer(map, markers,
-          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-
-  -->
+</div>

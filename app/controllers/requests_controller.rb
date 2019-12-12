@@ -1,4 +1,5 @@
 class RequestsController < ApplicationController
+
   def index
     @requests = Request.all.order({ :created_at => :desc })
     @lats = Sensor.pluck(:latitude)

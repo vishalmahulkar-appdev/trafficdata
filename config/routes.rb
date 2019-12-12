@@ -71,7 +71,6 @@ Rails.application.routes.draw do
           
   # READ
   match("/requests", { :controller => "requests", :action => "index", :via => "get"})
-  
   match("/requests/:id_from_path", { :controller => "requests", :action => "show", :via => "get"})
   
   # UPDATE
