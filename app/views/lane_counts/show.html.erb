@@ -1,0 +1,132 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Lane count #<%= @lane_count.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/lane_counts" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_lane_count/<%= @lane_count.id %>" class="btn btn-block btn-outline-secondary">
+          Delete lane count
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Sensor
+      </dt>
+      <dd>
+        <%= @lane_count.sensor_id %>
+      </dd>
+
+      <dt>
+        Lane
+      </dt>
+      <dd>
+        <%= @lane_count.lane_id %>
+      </dd>
+
+      <dt>
+        Counts
+      </dt>
+      <dd>
+        <%= @lane_count.counts %>
+      </dd>
+
+      <dt>
+        Lane number
+      </dt>
+      <dd>
+        <%= @lane_count.lane_number %>
+      </dd>
+
+      <dt>
+        Time
+      </dt>
+      <dd>
+        <%= @lane_count.time %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lane_count.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lane_count.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit lane count
+    </h2>
+
+    <form action="/modify_lane_count/<%= @lane_count.id %>"  method="post" >
+      <div class="form-group">
+        <label for="sensor_id_box">
+          Sensor
+        </label>
+
+        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control" value="<%= @lane_count.sensor_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_id_box">
+          Lane
+        </label>
+
+        <input type="text" id="lane_id_box" name="lane_id_from_query" class="form-control" value="<%= @lane_count.lane_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="counts_box">
+          Counts
+        </label>
+
+        <input type="text" id="counts_box" name="counts_from_query" class="form-control" value="<%= @lane_count.counts %>">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_number_box">
+          Lane number
+        </label>
+
+        <input type="text" id="lane_number_box" name="lane_number_from_query" class="form-control" value="<%= @lane_count.lane_number %>">
+      </div>
+
+      <div class="form-group">
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="time_from_query"
+          class="form-control" value="<%= @lane_count.time %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update lane count
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

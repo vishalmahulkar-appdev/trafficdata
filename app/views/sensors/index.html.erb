@@ -1,0 +1,164 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all sensors
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new sensor
+    </h2>
+
+    <form action="/insert_sensor" method="post">
+      <div class="form-group">
+        <label for="type_id_box">
+          Type
+        </label>
+
+        <input type="text" id="type_id_box" name="type_id_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="location_id_box">
+          Location
+        </label>
+
+        <input type="text" id="location_id_box" name="location_id_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="sensor_name_box">
+          Sensor name
+        </label>
+
+        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control">
+      </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1">
+
+        <label class="custom-control-label" for="operational_status_box">Operational status</label>
+      </div>
+
+      <div class="form-group">
+        <label for="latitude_box">
+          Latitude
+        </label>
+
+        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="longitude_box">
+          Longitude
+        </label>
+
+        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create sensor
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Type
+        </th>
+
+        <th>
+          Location
+        </th>
+
+        <th>
+          Sensor name
+        </th>
+
+        <th>
+          Operational status
+        </th>
+
+        <th>
+          Latitude
+        </th>
+
+        <th>
+          Longitude
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @sensors.each do |sensor| %>
+      <tr>
+        <td>
+          <%= sensor.id %>
+        </td>
+
+        <td>
+          <%= sensor.type_id %>
+        </td>
+
+        <td>
+          <%= sensor.location_id %>
+        </td>
+
+        <td>
+          <%= sensor.sensor_name %>
+        </td>
+
+        <td>
+          <%= sensor.operational_status %>
+        </td>
+
+        <td>
+          <%= sensor.latitude %>
+        </td>
+
+        <td>
+          <%= sensor.longitude %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(sensor.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(sensor.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/sensors/<%= sensor.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

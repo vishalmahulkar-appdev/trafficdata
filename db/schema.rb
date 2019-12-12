@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_25_154927) do
+ActiveRecord::Schema.define(version: 2019_12_12_034732) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -36,6 +36,81 @@ ActiveRecord::Schema.define(version: 2019_10_25_154927) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "lane_counts", force: :cascade do |t|
+    t.integer "sensor_id"
+    t.integer "lane_id"
+    t.integer "counts"
+    t.integer "lane_number"
+    t.datetime "time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "lane_speeds", force: :cascade do |t|
+    t.integer "sensor_id"
+    t.integer "lane_id"
+    t.integer "speed"
+    t.integer "lane_number"
+    t.datetime "time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "lanes", force: :cascade do |t|
+    t.string "lane_name"
+    t.integer "lane_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.integer "latitude"
+    t.integer "longitude"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.time "begin_time"
+    t.time "end_time"
+    t.integer "requestor_id"
+    t.integer "speed_range_lower_limt"
+    t.integer "speed_range_upper_limit"
+    t.integer "sensor_id"
+    t.float "bounding_box_latitude_1"
+    t.float "bounding_box_latitude_2"
+    t.float "bounding_box_longitude_1"
+    t.float "bounding_box_longitude_2"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sensor_types", force: :cascade do |t|
+    t.string "sensor_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sensors", force: :cascade do |t|
+    t.integer "type_id"
+    t.integer "location_id"
+    t.string "sensor_name"
+    t.boolean "operational_status"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "traffic_managers", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

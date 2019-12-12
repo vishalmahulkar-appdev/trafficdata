@@ -1,0 +1,150 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all lane counts
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new lane count
+    </h2>
+
+    <form action="/insert_lane_count" method="post">
+      <div class="form-group">
+        <label for="sensor_id_box">
+          Sensor
+        </label>
+
+        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_id_box">
+          Lane
+        </label>
+
+        <input type="text" id="lane_id_box" name="lane_id_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="counts_box">
+          Counts
+        </label>
+
+        <input type="text" id="counts_box" name="counts_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_number_box">
+          Lane number
+        </label>
+
+        <input type="text" id="lane_number_box" name="lane_number_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="time_from_query" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create lane count
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Sensor
+        </th>
+
+        <th>
+          Lane
+        </th>
+
+        <th>
+          Counts
+        </th>
+
+        <th>
+          Lane number
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @lane_counts.each do |lane_count| %>
+      <tr>
+        <td>
+          <%= lane_count.id %>
+        </td>
+
+        <td>
+          <%= lane_count.sensor_id %>
+        </td>
+
+        <td>
+          <%= lane_count.lane_id %>
+        </td>
+
+        <td>
+          <%= lane_count.counts %>
+        </td>
+
+        <td>
+          <%= lane_count.lane_number %>
+        </td>
+
+        <td>
+          <%= lane_count.time %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(lane_count.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(lane_count.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/lane_counts/<%= lane_count.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

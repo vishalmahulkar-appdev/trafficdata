@@ -1,0 +1,86 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Location #<%= @location.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/locations" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_location/<%= @location.id %>" class="btn btn-block btn-outline-secondary">
+          Delete location
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Latitude
+      </dt>
+      <dd>
+        <%= @location.latitude %>
+      </dd>
+
+      <dt>
+        Longitude
+      </dt>
+      <dd>
+        <%= @location.longitude %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@location.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@location.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit location
+    </h2>
+
+    <form action="/modify_location/<%= @location.id %>"  method="post" >
+      <div class="form-group">
+        <label for="latitude_box">
+          Latitude
+        </label>
+
+        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control" value="<%= @location.latitude %>">
+      </div>
+
+      <div class="form-group">
+        <label for="longitude_box">
+          Longitude
+        </label>
+
+        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control" value="<%= @location.longitude %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update location
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

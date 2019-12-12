@@ -1,0 +1,86 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Lane #<%= @lane.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/lanes" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_lane/<%= @lane.id %>" class="btn btn-block btn-outline-secondary">
+          Delete lane
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Lane name
+      </dt>
+      <dd>
+        <%= @lane.lane_name %>
+      </dd>
+
+      <dt>
+        Lane number
+      </dt>
+      <dd>
+        <%= @lane.lane_number %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lane.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@lane.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit lane
+    </h2>
+
+    <form action="/modify_lane/<%= @lane.id %>"  method="post" >
+      <div class="form-group">
+        <label for="lane_name_box">
+          Lane name
+        </label>
+
+        <input type="text" id="lane_name_box" name="lane_name_from_query" class="form-control" value="<%= @lane.lane_name %>">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_number_box">
+          Lane number
+        </label>
+
+        <input type="text" id="lane_number_box" name="lane_number_from_query" class="form-control" value="<%= @lane.lane_number %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update lane
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

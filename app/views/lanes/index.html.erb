@@ -1,0 +1,102 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all lanes
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new lane
+    </h2>
+
+    <form action="/insert_lane" method="post">
+      <div class="form-group">
+        <label for="lane_name_box">
+          Lane name
+        </label>
+
+        <input type="text" id="lane_name_box" name="lane_name_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="lane_number_box">
+          Lane number
+        </label>
+
+        <input type="text" id="lane_number_box" name="lane_number_from_query" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create lane
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Lane name
+        </th>
+
+        <th>
+          Lane number
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @lanes.each do |lane| %>
+      <tr>
+        <td>
+          <%= lane.id %>
+        </td>
+
+        <td>
+          <%= lane.lane_name %>
+        </td>
+
+        <td>
+          <%= lane.lane_number %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(lane.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(lane.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/lanes/<%= lane.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

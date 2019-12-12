@@ -1,0 +1,52 @@
+<div >
+  <h5>
+    Edit Traffic Manager Account
+  </h5>
+
+  <% if @traffic_manager.errors.any? %>
+  <% @traffic_manager.errors.full_messages.each do |message| %>
+    <div class="alert">
+      <%= message %>
+    </div>
+  <% end %>
+  <% end %>
+  <div>
+    <form action="/patch_traffic_manager" method="post">
+              
+      <div>
+        <label for="email_box">Email</label>
+          
+        <input id="email_box" name="email_from_query" value="<%= @current_traffic_manager.email %>">
+          
+      </div>
+                                    
+      <div>
+        <label for="first_name_box">First name</label>
+          
+        <input id="first_name_box" name="first_name_from_query" value="<%= @current_traffic_manager.first_name %>">
+          
+      </div>
+                      
+      <div>
+        <label for="last_name_box">Last name</label>
+          
+        <input id="last_name_box" name="last_name_from_query" value="<%= @current_traffic_manager.last_name %>">
+          
+      </div>
+              
+      <div>
+        <label for="password_box">Password</label>
+        <input id="password_box" name="password_from_query" placeholder="Choose a new password..." type="password">
+      </div>
+    
+      <div>
+        <label for="password_confirmation_box">Password Confirmation</label>
+        <input id="password_confirmation_box" name="password_confirmation_from_query" placeholder="Confirm your new password..." type="password">
+      </div>
+
+      <button>
+        Update account
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,206 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Request #<%= @request.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/requests" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_request/<%= @request.id %>" class="btn btn-block btn-outline-secondary">
+          Delete request
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Begin time
+      </dt>
+      <dd>
+        <%= @request.begin_time %>
+      </dd>
+
+      <dt>
+        End time
+      </dt>
+      <dd>
+        <%= @request.end_time %>
+      </dd>
+
+      <dt>
+        Requestor
+      </dt>
+      <dd>
+        <%= @request.requestor_id %>
+      </dd>
+
+      <dt>
+        Speed range lower limt
+      </dt>
+      <dd>
+        <%= @request.speed_range_lower_limt %>
+      </dd>
+
+      <dt>
+        Speed range upper limit
+      </dt>
+      <dd>
+        <%= @request.speed_range_upper_limit %>
+      </dd>
+
+      <dt>
+        Sensor
+      </dt>
+      <dd>
+        <%= @request.sensor_id %>
+      </dd>
+
+      <dt>
+        Bounding box latitude 1
+      </dt>
+      <dd>
+        <%= @request.bounding_box_latitude_1 %>
+      </dd>
+
+      <dt>
+        Bounding box latitude 2
+      </dt>
+      <dd>
+        <%= @request.bounding_box_latitude_2 %>
+      </dd>
+
+      <dt>
+        Bounding box longitude 1
+      </dt>
+      <dd>
+        <%= @request.bounding_box_longitude_1 %>
+      </dd>
+
+      <dt>
+        Bounding box longitude 2
+      </dt>
+      <dd>
+        <%= @request.bounding_box_longitude_2 %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@request.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@request.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit request
+    </h2>
+
+    <form action="/modify_request/<%= @request.id %>"  method="post" >
+      <div class="form-group">
+        <label for="begin_time_box">
+          Begin time
+        </label>
+
+        <input type="time" id="begin_time_box" name="begin_time_from_query" class="form-control" value="<%= @request.begin_time %>">
+      </div>
+
+      <div class="form-group">
+        <label for="end_time_box">
+          End time
+        </label>
+
+        <input type="time" id="end_time_box" name="end_time_from_query" class="form-control" value="<%= @request.end_time %>">
+      </div>
+
+      <div class="form-group">
+        <label for="requestor_id_box">
+          Requestor
+        </label>
+
+        <input type="text" id="requestor_id_box" name="requestor_id_from_query" class="form-control" value="<%= @request.requestor_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="speed_range_lower_limt_box">
+          Speed range lower limt
+        </label>
+
+        <input type="text" id="speed_range_lower_limt_box" name="speed_range_lower_limt_from_query" class="form-control" value="<%= @request.speed_range_lower_limt %>">
+      </div>
+
+      <div class="form-group">
+        <label for="speed_range_upper_limit_box">
+          Speed range upper limit
+        </label>
+
+        <input type="text" id="speed_range_upper_limit_box" name="speed_range_upper_limit_from_query" class="form-control" value="<%= @request.speed_range_upper_limit %>">
+      </div>
+
+      <div class="form-group">
+        <label for="sensor_id_box">
+          Sensor
+        </label>
+
+        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control" value="<%= @request.sensor_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="bounding_box_latitude_1_box">
+          Bounding box latitude 1
+        </label>
+
+        <input type="text" id="bounding_box_latitude_1_box" name="bounding_box_latitude_1_from_query" class="form-control" value="<%= @request.bounding_box_latitude_1 %>">
+      </div>
+
+      <div class="form-group">
+        <label for="bounding_box_latitude_2_box">
+          Bounding box latitude 2
+        </label>
+
+        <input type="text" id="bounding_box_latitude_2_box" name="bounding_box_latitude_2_from_query" class="form-control" value="<%= @request.bounding_box_latitude_2 %>">
+      </div>
+
+      <div class="form-group">
+        <label for="bounding_box_longitude_1_box">
+          Bounding box longitude 1
+        </label>
+
+        <input type="text" id="bounding_box_longitude_1_box" name="bounding_box_longitude_1_from_query" class="form-control" value="<%= @request.bounding_box_longitude_1 %>">
+      </div>
+
+      <div class="form-group">
+        <label for="bounding_box_longitude_2_box">
+          Bounding box longitude 2
+        </label>
+
+        <input type="text" id="bounding_box_longitude_2_box" name="bounding_box_longitude_2_from_query" class="form-control" value="<%= @request.bounding_box_longitude_2 %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update request
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

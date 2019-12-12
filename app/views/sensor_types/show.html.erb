@@ -1,0 +1,71 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Sensor type #<%= @sensor_type.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/sensor_types" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_sensor_type/<%= @sensor_type.id %>" class="btn btn-block btn-outline-secondary">
+          Delete sensor type
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Sensor type
+      </dt>
+      <dd>
+        <%= @sensor_type.sensor_type %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@sensor_type.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@sensor_type.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit sensor type
+    </h2>
+
+    <form action="/modify_sensor_type/<%= @sensor_type.id %>"  method="post" >
+      <div class="form-group">
+        <label for="sensor_type_box">
+          Sensor type
+        </label>
+
+        <input type="text" id="sensor_type_box" name="sensor_type_from_query" class="form-control" value="<%= @sensor_type.sensor_type %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update sensor type
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

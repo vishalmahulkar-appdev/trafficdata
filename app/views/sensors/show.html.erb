@@ -1,0 +1,145 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Sensor #<%= @sensor.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/sensors" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_sensor/<%= @sensor.id %>" class="btn btn-block btn-outline-secondary">
+          Delete sensor
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Type
+      </dt>
+      <dd>
+        <%= @sensor.type_id %>
+      </dd>
+
+      <dt>
+        Location
+      </dt>
+      <dd>
+        <%= @sensor.location_id %>
+      </dd>
+
+      <dt>
+        Sensor name
+      </dt>
+      <dd>
+        <%= @sensor.sensor_name %>
+      </dd>
+
+      <dt>
+        Operational status
+      </dt>
+      <dd>
+        <%= @sensor.operational_status %>
+      </dd>
+
+      <dt>
+        Latitude
+      </dt>
+      <dd>
+        <%= @sensor.latitude %>
+      </dd>
+
+      <dt>
+        Longitude
+      </dt>
+      <dd>
+        <%= @sensor.longitude %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@sensor.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@sensor.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit sensor
+    </h2>
+
+    <form action="/modify_sensor/<%= @sensor.id %>"  method="post" >
+      <div class="form-group">
+        <label for="type_id_box">
+          Type
+        </label>
+
+        <input type="text" id="type_id_box" name="type_id_from_query" class="form-control" value="<%= @sensor.type_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="location_id_box">
+          Location
+        </label>
+
+        <input type="text" id="location_id_box" name="location_id_from_query" class="form-control" value="<%= @sensor.location_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="sensor_name_box">
+          Sensor name
+        </label>
+
+        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control" value="<%= @sensor.sensor_name %>">
+      </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1" <%= "checked" if @sensor.operational_status %>>
+
+        <label class="custom-control-label"
+          for="operational_status_box">Operational status</label>
+      </div>
+
+      <div class="form-group">
+        <label for="latitude_box">
+          Latitude
+        </label>
+
+        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control" value="<%= @sensor.latitude %>">
+      </div>
+
+      <div class="form-group">
+        <label for="longitude_box">
+          Longitude
+        </label>
+
+        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control" value="<%= @sensor.longitude %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update sensor
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
