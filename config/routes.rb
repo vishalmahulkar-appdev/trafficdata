@@ -105,10 +105,12 @@ Rails.application.routes.draw do
   # Routes for the Sensor resource:
 
   # CREATE
+  match("/add_new_sensor_page", { :controller => "sensors", :action => "add_sensor_page", :via => "get"})
   match("/insert_sensor", { :controller => "sensors", :action => "create", :via => "post"})
           
   # READ
   match("/sensors", { :controller => "sensors", :action => "index", :via => "get"})
+  match("/show_sensor_list", { :controller => "sensors", :action => "show_sensor_list", :via => "get"}) 
   match("/sensors/:id_from_path", { :controller => "sensors", :action => "show", :via => "get"})
   
   # UPDATE

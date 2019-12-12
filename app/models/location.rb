@@ -10,4 +10,7 @@
 #
 
 class Location < ApplicationRecord
+  has_many :sensors, :dependent => :destroy
+  has_many :speeds, :through => :sensors, :source => :speeds
+  has_many :volumes, :through => :sensors, :source => :volumes  
 end

@@ -10,4 +10,6 @@
 #
 
 class Lane < ApplicationRecord
+  has_many :lane_speeds, :dependent => :destroy
+  has_many :lane_counts, :dependent => :destroy
 end

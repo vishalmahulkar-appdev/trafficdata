@@ -8,6 +8,16 @@ class SensorsController < ApplicationController
     render({ :template => "sensors/index.html.erb" })
   end
 
+  def show_sensor_list
+    @sensors = Sensor.all
+    render({ :template => "sensors/show_sensor_list.html.erb" })
+  end
+
+  def add_sensor_page
+    @sensortypes = SensorType.all
+    render({ :template => "sensors/add_sensor.html.erb" })
+  end
+
   def show
     the_id = params.fetch("id_from_path")
     @sensor = Sensor.where({:id => the_id }).at(0)

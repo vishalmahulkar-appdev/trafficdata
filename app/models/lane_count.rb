@@ -13,4 +13,7 @@
 #
 
 class LaneCount < ApplicationRecord
+  belongs_to :sensor
+  belongs_to :lane
+  has_one :location, :through => :sensor, :source => :location
 end

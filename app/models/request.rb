@@ -18,4 +18,6 @@
 #
 
 class Request < ApplicationRecord
+  belongs_to :requestor, :class_name => "TrafficManager"
+  belongs_to :sensor
 end
