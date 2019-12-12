@@ -1,6 +1,14 @@
 class TrafficManagersController < ApplicationController
-  skip_before_action(:force_traffic_manager_sign_in, { :only => [:new_registration_form, :create] })
+  skip_before_action(:force_traffic_manager_sign_in, { :only => [:new_registration_form, :create, :git] })
   
+  def index
+    @sensor_count = Sensor.count
+    @location_count = Location.count
+    @lane_speed_count = LaneSpeed.count 
+    @lane_volume_count = LaneCount.count
+    render({ :template => "traffic_managers/index.html"})
+  end
+
   def new_registration_form
     render({ :template => "traffic_manager_sessions/sign_up.html.erb" })
   end

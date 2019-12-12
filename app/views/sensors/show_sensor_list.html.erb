@@ -1,0 +1,89 @@
+<div class="row mb-3">
+  <div class="mx-auto">
+    <h2>  List of currently deployed sensors <span class="badge badge-secondary"></h2>
+  </div>
+</div>
+<ul style="list-style-type:none;"> 
+  <li>
+    <a href="/add_new_sensor_page">Add a sensors</a>
+  </li>
+</ul>
+
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Type
+        </th>
+
+        <th>
+          Location
+        </th>
+
+        <th>
+          Sensor name
+        </th>
+
+        <th>
+          Operational status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+          Detais
+        </th>
+      </tr>
+
+      <% @sensors.each do |sensor| %>
+      <tr>
+        <td>
+          <%= sensor.id %>
+        </td>
+
+        <td>
+          <%= sensor.type.sensor_type %>
+        </td>
+
+        <td>
+          [<%= (sensor.location.latitude/1000000.0).to_s %>,  <%= (sensor.location.longitude/1000000.0).to_s %>]
+        </td>
+
+        <td>
+          <%= sensor.sensor_name %>
+        </td>
+
+        <td>
+          <%= sensor.operational_status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(sensor.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(sensor.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/sensors/<%= sensor.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

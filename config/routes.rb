@@ -1,5 +1,29 @@
 Rails.application.routes.draw do
 
+  match("/", { :controller => "traffic_managers", :action => "index", :via => "get" })
+
+    #------------------------------
+
+  # Routes for signing up
+  match("/traffic_manager_sign_up", { :controller => "traffic_managers", :action => "new_registration_form", :via => "get"})
+  
+  # Routes for signing in
+  match("/traffic_manager_sign_in", { :controller => "traffic_manager_sessions", :action => "new_session_form", :via => "get"})
+  match("/traffic_manager_verify_credentials", { :controller => "traffic_manager_sessions", :action => "add_cookie", :via => "post"})
+  
+  # Route for signing out
+  match("/traffic_manager_sign_out", { :controller => "traffic_manager_sessions", :action => "remove_cookies", :via => "get"})
+  
+  # Route for creating account into database 
+  match("/post_traffic_manager", { :controller => "traffic_managers", :action => "create", :via => "post" })
+  
+  # Route for editing account
+  match("/edit_traffic_manager", { :controller => "traffic_managers", :action => "edit_registration_form", :via => "get"})
+  match("/patch_traffic_manager", { :controller => "traffic_managers", :action => "update", :via => "post"})
+  
+  # Route for removing an account
+  match("/cancel_traffic_manager_account", { :controller => "traffic_managers", :action => "destroy", :via => "get"})
+
 
 
   # Routes for the Lane resource:
@@ -113,35 +137,6 @@ Rails.application.routes.draw do
   
   # DELETE
   match("/delete_request/:id_from_path", { :controller => "requests", :action => "destroy", :via => "get"})
-
-  #------------------------------
-
-  # Routes for signing up
-
-  match("/traffic_manager_sign_up", { :controller => "traffic_managers", :action => "new_registration_form", :via => "get"})
-  
-  # Routes for signing in
-  match("/traffic_manager_sign_in", { :controller => "traffic_manager_sessions", :action => "new_session_form", :via => "get"})
-  
-  match("/traffic_manager_verify_credentials", { :controller => "traffic_manager_sessions", :action => "add_cookie", :via => "post"})
-  
-  # Route for signing out
-  
-  match("/traffic_manager_sign_out", { :controller => "traffic_manager_sessions", :action => "remove_cookies", :via => "get"})
-  
-  # Route for creating account into database 
-
-  match("/post_traffic_manager", { :controller => "traffic_managers", :action => "create", :via => "post" })
-  
-  # Route for editing account
-  
-  match("/edit_traffic_manager", { :controller => "traffic_managers", :action => "edit_registration_form", :via => "get"})
-  
-  match("/patch_traffic_manager", { :controller => "traffic_managers", :action => "update", :via => "post"})
-  
-  # Route for removing an account
-  
-  match("/cancel_traffic_manager_account", { :controller => "traffic_managers", :action => "destroy", :via => "get"})
 
 
   #------------------------------

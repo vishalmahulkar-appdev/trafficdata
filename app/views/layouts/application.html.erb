@@ -6,6 +6,15 @@
 
     <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
     <meta charset="utf-8">
+    <!-- Connect Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+    <!-- Connect Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Connect Bootstrap JavaScript and its dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
     <!-- Make it responsive to small screens -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,9 +22,95 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+      #map {
+        height: 70%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
 
   <body>
+    <nav class="navbar nav-tabs navbar-expand-lg sticky-top navbar-light bg-light"> 
+      <a class="navbar-brand" href="/"><img src="uptimlogo.png" width="100"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          
+          <% if @current_traffic_manager == nil %>
+            <li class="nav-item active">
+              <a class="nav-link" href="/traffic_manager_sign_in">Home<span class="sr-only">(current)</span></a>
+            </li>
+          <% else %>
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+          <% end %>
+          
+          
+          <% if @current_traffic_manager == nil %>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Sensors</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link disabled dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                View Data
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item disabled" href="#">Lane Speeds</a>
+                <a class="dropdown-item disabled" href="#">Lane Counts</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Request History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Account</a>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <a class="nav-link" href="/sensors">Sensors</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                View Data
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Lane Speeds</a>
+                <a class="dropdown-item" href="#">Lane Counts</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Request History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Account</a>
+            </li>
+          <% end %>
+        </ul>
+        <form class="form-inline" action="/traffic_manager_sign_in">
+          <% if @current_traffic_manager == nil %>
+              <a class="nav-link" href="/traffic_manager_sign_in">Sign In</a>
+          <% else %>
+              <a class="nav-link" href="/traffic_manager_sign_out">Sign Out</a>
+          <% end %>
+        </form>
+      </div>
+    </nav>
+
+    <br>
+    <br>
     <%= yield %>
   </body>
 </html>

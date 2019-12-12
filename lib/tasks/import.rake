@@ -48,13 +48,13 @@ namespace :import do
   task speeds: :environment do
     require "csv"
 
-    csv_text = File.read(Rails.root.join("lib", "data", "SpeedDataClean-20191205.csv"))
+    csv_text = File.read(Rails.root.join("public", "data", "SpeedDataClean-20191205.csv"))
     csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
 
     counter = 0
     csv.each do |row|
       counter = counter + 1
-      if counter > 218799
+      if counter > 0
 
         sp = LaneSpeed.new
         ct = LaneCount.new
@@ -70,7 +70,7 @@ namespace :import do
           ct.sensor_id = thissensor.id
           sp.speed = row["lane-speed"]
           sp.save
-          ct.count = row["lane-count"]
+          ct.counts = row["lane-count"]
           ct.save
         end
         

@@ -1,0 +1,57 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new sensor
+    </h2>
+
+    <form action="/insert_sensor" method="post">
+      <div class="form-group">
+        <label for="type_id_box">
+          Sensor Type
+        </label>
+
+        <select id="type_id_box" name="type_id_from_query" class="form-control">
+          <% @sensortypes.each do |thistype| %>
+            <option value="<%= thistype.id %>"><%= thistype.sensor_type %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="location_id_box">
+          Location
+        </label>
+
+        <input type="text" id="location_id_box" name="location_id_from_query" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="sensor_name_box">
+          Sensor name
+        </label>
+
+        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control">
+      </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1">
+
+        <label class="custom-control-label" for="operational_status_box">Operational status</label>
+      </div>
+
+      <div class="form-group">
+        <label for="lane_id_box">
+          Lane
+        </label>
+
+        <input type="text" id="lane_id_box" name="lane_id_from_query" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create sensor
+      </button>
+    </form>
+    <hr>
+    <a href="#">Add new sensor type</a>
+  </div>
+</div>

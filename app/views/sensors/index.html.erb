@@ -1,164 +1,87 @@
+<head>
+<script>
+  function initMap() {
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 7.5,
+      center: {lat: 41.8780, lng: -93.0977}
+    });
+
+    // Create an array of alphabetical characters used to label the markers.
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // Add some markers to the map.
+    // Note: The code uses the JavaScript Array.prototype.map() method to
+    // create an array of markers based on a given "locations" array.
+    // The map() method here has nothing to do with the Google Maps API.
+    var markers = locations.map(function(location, i) {
+      return new google.maps.Marker({
+        position: location,
+        label: labels[i % labels.length]
+      });
+    });
+
+    // Add a marker clusterer to manage the markers.
+    var markerCluster = new MarkerClusterer(map, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+  }
+
+  var mydata = <%= @data.inspect.html_safe %>
+  
+  var locations = [];
+  for(var i in mydata){
+    locations.push( {"lat": mydata[i][0], "lng": mydata[i][1]});
+  }
+
+</script>
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+
+<!--
+<script>
+  // Initialize and add the map
+  function initMap() {
+    // The location of Uluru
+    var uluru = {lat: 41.8780, lng: -93.0977};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 5, center: uluru});
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
+  }
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+
 <div class="row mb-3">
-  <div class="col-md-12">
-    <h1>
-      List of all sensors
-    </h1>
+  <div class="mx-auto">
+    <h2>  Welcome to Iowa Traffic Data Exchange <span class="badge badge-secondary"></h2>
   </div>
 </div>
 
-<hr>
-
 <div class="row mb-3">
-  <div class="col-md-8 offset-md-2">
-    <h2>
-      Add a new sensor
-    </h2>
-
-    <form action="/insert_sensor" method="post">
-      <div class="form-group">
-        <label for="type_id_box">
-          Type
-        </label>
-
-        <input type="text" id="type_id_box" name="type_id_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="location_id_box">
-          Location
-        </label>
-
-        <input type="text" id="location_id_box" name="location_id_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="sensor_name_box">
-          Sensor name
-        </label>
-
-        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control">
-      </div>
-
-      <div class="custom-control custom-checkbox mb-3">
-        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1">
-
-        <label class="custom-control-label" for="operational_status_box">Operational status</label>
-      </div>
-
-      <div class="form-group">
-        <label for="latitude_box">
-          Latitude
-        </label>
-
-        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="longitude_box">
-          Longitude
-        </label>
-
-        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control">
-      </div>
-
-      <button class="btn btn-block btn-outline-secondary">
-        Create sensor
-      </button>
-    </form>
+  <div class="col-md-8 offset-md-1">
+    <ul style="list-style-type:none;"> 
+      <li>
+        <a href="/add_new_sensor_page">Add a sensors</a>
+      </li>
+      <li>
+        <a href="/sensor_list">View sensor list</a>
+      </li>
+    </ul>
   </div>
 </div>
 
-<hr>
-<div class="row mb-3">
-  <div class="col-md-12">
-    <table class="table">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Type
-        </th>
-
-        <th>
-          Location
-        </th>
-
-        <th>
-          Sensor name
-        </th>
-
-        <th>
-          Operational status
-        </th>
-
-        <th>
-          Latitude
-        </th>
-
-        <th>
-          Longitude
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @sensors.each do |sensor| %>
-      <tr>
-        <td>
-          <%= sensor.id %>
-        </td>
-
-        <td>
-          <%= sensor.type_id %>
-        </td>
-
-        <td>
-          <%= sensor.location_id %>
-        </td>
-
-        <td>
-          <%= sensor.sensor_name %>
-        </td>
-
-        <td>
-          <%= sensor.operational_status %>
-        </td>
-
-        <td>
-          <%= sensor.latitude %>
-        </td>
-
-        <td>
-          <%= sensor.longitude %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(sensor.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(sensor.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/sensors/<%= sensor.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+<div id="map" class="container">
+  <div class="col-md-10">
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78&libraries=places&callback=initMap">
+    </script>
   </div>
 </div>
 
-<hr>
+
