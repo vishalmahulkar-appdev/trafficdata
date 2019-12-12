@@ -109,7 +109,6 @@ Rails.application.routes.draw do
           
   # READ
   match("/sensors", { :controller => "sensors", :action => "index", :via => "get"})
-  
   match("/sensors/:id_from_path", { :controller => "sensors", :action => "show", :via => "get"})
   
   # UPDATE

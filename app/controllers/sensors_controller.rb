@@ -1,6 +1,9 @@
 class SensorsController < ApplicationController
+  
   def index
     @sensors = Sensor.all.order({ :created_at => :desc })
+    @lats = Sensor.pluck(:latitude)
+    @lons = Sensor.pluck(:longitude)
 
     render({ :template => "sensors/index.html.erb" })
   end

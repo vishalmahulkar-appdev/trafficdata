@@ -26,11 +26,12 @@
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
   }
 
-  var mydata = <%= @data.inspect.html_safe %>
+  var latitudes = <%= @lats.inspect.html_safe %>
+  var longitudes = <%= @lons.inspect.html_safe %>
   
   var locations = [];
-  for(var i in mydata){
-    locations.push( {"lat": mydata[i][0], "lng": mydata[i][1]});
+  for(var i in latitudes){
+    locations.push( {"lat": latitudes[i], "lng": longitudes[i]});
   }
 
 </script>
@@ -59,12 +60,12 @@
 
 <div class="row mb-3">
   <div class="mx-auto">
-    <h2>  Welcome to Iowa Traffic Data Exchange <span class="badge badge-secondary"></h2>
+    <h2>  Current sensor locations <span class="badge badge-secondary"></h2>
   </div>
 </div>
 
-<div class="row mb-3">
-  <div class="col-md-8 offset-md-1">
+<div class="container">
+  <div class="col-md-10">
     <ul style="list-style-type:none;"> 
       <li>
         <a href="/add_new_sensor_page">Add a sensors</a>
@@ -78,6 +79,7 @@
 
 <div id="map" class="container">
   <div class="col-md-10">
+    
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78&libraries=places&callback=initMap">
     </script>
