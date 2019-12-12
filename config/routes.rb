@@ -62,7 +62,26 @@ Rails.application.routes.draw do
   # DELETE
   match("/delete_sensor_type/:id_from_path", { :controller => "sensor_types", :action => "destroy", :via => "get"})
 
+  #------------------------------
+
+  # Routes for the Request resource:
+
+  # CREATE
+  match("/insert_request", { :controller => "requests", :action => "create", :via => "post"})
+          
+  # READ
+  match("/requests", { :controller => "requests", :action => "index", :via => "get"})
   
+  match("/requests/:id_from_path", { :controller => "requests", :action => "show", :via => "get"})
+  
+  # UPDATE
+  
+  match("/modify_request/:id_from_path", { :controller => "requests", :action => "update", :via => "post"})
+  
+  # DELETE
+  match("/delete_request/:id_from_path", { :controller => "requests", :action => "destroy", :via => "get"})
+
+
 
   #------------------------------
 
@@ -120,26 +139,6 @@ Rails.application.routes.draw do
   
   # DELETE
   #match("/delete_location/:id_from_path", { :controller => "locations", :action => "destroy", :via => "get"})
-
-  
-  #------------------------------
-
-  # Routes for the Request resource:
-
-  # CREATE
-  match("/insert_request", { :controller => "requests", :action => "create", :via => "post"})
-          
-  # READ
-  match("/requests", { :controller => "requests", :action => "index", :via => "get"})
-  
-  match("/requests/:id_from_path", { :controller => "requests", :action => "show", :via => "get"})
-  
-  # UPDATE
-  
-  match("/modify_request/:id_from_path", { :controller => "requests", :action => "update", :via => "post"})
-  
-  # DELETE
-  match("/delete_request/:id_from_path", { :controller => "requests", :action => "destroy", :via => "get"})
 
 
   #------------------------------

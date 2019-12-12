@@ -1,17 +1,109 @@
-<div class="row mb-3">
-  <div class="col-md-12">
-    <h1>
-      List of all requests
-    </h1>
+<head>
+  <script>
+    // This example adds a user-editable rectangle to the map.
+    // When the user changes the bounds of the rectangle,
+    // an info window pops up displaying the new bounds.
+
+    var rectangle;
+    var map;
+    var infoWindow;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {lat: 41.8780, lng: -93.0977}
+      });
+
+      var bounds = {
+        north: 41.937,
+        south: 41.739,
+        east: -93.430,
+        west: -93.743
+      };
+
+      // Define the rectangle and set its editable property to true.
+      rectangle = new google.maps.Rectangle({
+        bounds: bounds,
+        editable: true,
+        draggable: true
+      });
+
+      rectangle.setMap(map);
+
+      // Add an event listener on the rectangle.
+      rectangle.addListener('bounds_changed', showNewRect);
+
+      // Define an info window on the map.
+      infoWindow = new google.maps.InfoWindow();
+
+      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // Add some markers to the map.
+      // Note: The code uses the JavaScript Array.prototype.map() method to
+      // create an array of markers based on a given "locations" array.
+      // The map() method here has nothing to do with the Google Maps API.
+      var markers = locations.map(function(location, i) {
+        return new google.maps.Marker({
+          position: location,
+          label: labels[i % labels.length]
+        });
+      });
+
+      // Add a marker clusterer to manage the markers.
+      var markerCluster = new MarkerClusterer(map, markers,
+          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    }
+
+    var latitudes = <%= @lats.inspect.html_safe %>
+    var longitudes = <%= @lons.inspect.html_safe %>
+    
+    var locations = [];
+    for(var i in latitudes){
+      locations.push( {"lat": latitudes[i], "lng": longitudes[i]});
+    }
+    // Show the new coordinates for the rectangle in an info window.
+
+    /** @this {google.maps.Rectangle} */
+    function showNewRect(event) {
+      var ne = rectangle.getBounds().getNorthEast();
+      var sw = rectangle.getBounds().getSouthWest();
+
+      var contentString = '<b>Rectangle moved.</b><br>' +
+          'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+          'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+
+      // Set the info windows content and position.
+      infoWindow.setContent(contentString);
+      infoWindow.setPosition(ne);
+
+      infoWindow.open(map);
+
+      document.getElementById("bounding_box_latitude_1_box").value = ne.lat();
+      document.getElementById("bounding_box_latitude_2_box").value = sw.lat();
+      document.getElementById("bounding_box_longitude_1_box").value = sw.lng();
+      document.getElementById("bounding_box_longitude_2_box").value = ne.lng();
+    }
+  </script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+  </script>
+</head>
+
+
+
+<div id="map" class="container">
+  <div class="col-md-10">
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUXXnvUe-InS25W8HjSp-IH1CKRIIzSx4&libraries=places&callback=initMap">
+    </script>
   </div>
 </div>
 
-<hr>
+<br><br>
 
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <h2>
-      Add a new request
+      Add a new request for Vehicle speed data
     </h2>
 
     <form action="/insert_request" method="post">
@@ -32,69 +124,84 @@
       </div>
 
       <div class="form-group">
-        <label for="requestor_id_box">
-          Requestor
-        </label>
-
-        <input type="text" id="requestor_id_box" name="requestor_id_from_query" class="form-control">
+        <input type="hidden" name="requestor_id_from_query" class="form-control" value="<%= @current_traffic_manager.id %>">
       </div>
 
       <div class="form-group">
-        <label for="speed_range_lower_limt_box">
-          Speed range lower limt
-        </label>
-
-        <input type="text" id="speed_range_lower_limt_box" name="speed_range_lower_limt_from_query" class="form-control">
+        <div class="form-row">
+          <div class="col">
+            <label for="speed_range_lower_limt_box">
+              Speed range 
+              <br>
+              Lower limt in km/hr
+            </label>
+            <input type="text" id="speed_range_lower_limt_box" name="speed_range_lower_limt_from_query" class="form-control" value="0">
+          </div>
+          <div class="col">
+            <label for="speed_range_upper_limit_box">
+              <br>
+              Upper limit in km/hr
+            </label>
+            <input type="text" id="speed_range_upper_limit_box" name="speed_range_upper_limit_from_query" class="form-control" value="130">
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="speed_range_upper_limit_box">
-          Speed range upper limit
-        </label>
+        <div class="form-row">
+          <div class="col">
+            <label for="bounding_box_latitude_1_box">
+              Bounding box <br>
+              Latitude: North 
+            </label>
 
-        <input type="text" id="speed_range_upper_limit_box" name="speed_range_upper_limit_from_query" class="form-control">
+            <input type="text" id="bounding_box_latitude_1_box" name="bounding_box_latitude_1_from_query" class="form-control" value="41.937">
+          </div>
+          <div class="col">
+            <label for="bounding_box_longitude_1_box">
+              <br>
+              Longitude: West
+            </label>
+
+            <input type="text" id="bounding_box_longitude_1_box" name="bounding_box_longitude_1_from_query" class="form-control" value="-93.743">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <label for="bounding_box_latitude_2_box">
+              Latitude: South
+            </label>
+
+            <input type="text" id="bounding_box_latitude_2_box" name="bounding_box_latitude_2_from_query" class="form-control" value="41.739">
+          </div>
+          <div class="col">
+            <label for="bounding_box_longitude_2_box">
+              Longitude: East
+            </label>
+
+            <input type="text" id="bounding_box_longitude_2_box" name="bounding_box_longitude_2_from_query" class="form-control" value="-93.430">
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="sensor_id_box">
-          Sensor
+          Sensor List
         </label>
+        <select class="form-control" id="sensor_id_box" name="sensor_id_from_query"  onchange="singleSelectChangeText()">
+          <option value="" selected disabled hidden>Choose here</option>
+          <% i=0 %>
+          <% @sensors.all.each do |thesensor| %>
+            <option value="<%= thesensor.sensor_name %>"><%= thesensor.sensor_name %></option>
+          <% end %>
+        </select>
 
-        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control">
       </div>
 
-      <div class="form-group">
-        <label for="bounding_box_latitude_1_box">
-          Bounding box latitude 1
-        </label>
-
-        <input type="text" id="bounding_box_latitude_1_box" name="bounding_box_latitude_1_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="bounding_box_latitude_2_box">
-          Bounding box latitude 2
-        </label>
-
-        <input type="text" id="bounding_box_latitude_2_box" name="bounding_box_latitude_2_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="bounding_box_longitude_1_box">
-          Bounding box longitude 1
-        </label>
-
-        <input type="text" id="bounding_box_longitude_1_box" name="bounding_box_longitude_1_from_query" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="bounding_box_longitude_2_box">
-          Bounding box longitude 2
-        </label>
-
-        <input type="text" id="bounding_box_longitude_2_box" name="bounding_box_longitude_2_from_query" class="form-control">
-      </div>
-
+      
       <button class="btn btn-block btn-outline-secondary">
         Create request
       </button>
@@ -102,129 +209,33 @@
   </div>
 </div>
 
-<hr>
-<div class="row mb-3">
-  <div class="col-md-12">
-    <table class="table">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Begin time
-        </th>
-
-        <th>
-          End time
-        </th>
-
-        <th>
-          Requestor
-        </th>
-
-        <th>
-          Speed range lower limt
-        </th>
-
-        <th>
-          Speed range upper limit
-        </th>
-
-        <th>
-          Sensor
-        </th>
-
-        <th>
-          Bounding box latitude 1
-        </th>
-
-        <th>
-          Bounding box latitude 2
-        </th>
-
-        <th>
-          Bounding box longitude 1
-        </th>
-
-        <th>
-          Bounding box longitude 2
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @requests.each do |request| %>
-      <tr>
-        <td>
-          <%= request.id %>
-        </td>
-
-        <td>
-          <%= request.begin_time %>
-        </td>
-
-        <td>
-          <%= request.end_time %>
-        </td>
-
-        <td>
-          <%= request.requestor_id %>
-        </td>
-
-        <td>
-          <%= request.speed_range_lower_limt %>
-        </td>
-
-        <td>
-          <%= request.speed_range_upper_limit %>
-        </td>
-
-        <td>
-          <%= request.sensor_id %>
-        </td>
-
-        <td>
-          <%= request.bounding_box_latitude_1 %>
-        </td>
-
-        <td>
-          <%= request.bounding_box_latitude_2 %>
-        </td>
-
-        <td>
-          <%= request.bounding_box_longitude_1 %>
-        </td>
-
-        <td>
-          <%= request.bounding_box_longitude_2 %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(request.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(request.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/requests/<%= request.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+<!--
+<div id="map" class="col-md-4">
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78&libraries=places&callback=initMap">
+    </script>
   </div>
-</div>
 
-<hr>
+  
+      
+      // Create an array of alphabetical characters used to label the markers.
+      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // Add some markers to the map.
+      // Note: The code uses the JavaScript Array.prototype.map() method to
+      // create an array of markers based on a given "locations" array.
+      // The map() method here has nothing to do with the Google Maps API.
+
+      var markers = locations.map(function(location, i) {
+        return new google.maps.Marker({
+          position: location,
+          label: labels[i % labels.length]
+        });
+      });
+
+      // Add a marker clusterer to manage the markers.
+      var markerCluster = new MarkerClusterer(map, markers,
+          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+
+  -->

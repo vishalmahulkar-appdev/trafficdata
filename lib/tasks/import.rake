@@ -56,25 +56,26 @@ namespace :import do
       counter = counter + 1
       if counter > 152646
 
-        sp = LaneSpeed.new
-        ct = LaneCount.new
-        sp.time = row["local-time"]
-        ct.time = row["local-time"]
-        sp.lane_number = row["lane-Id"]
-        ct.lane_number = row["lane-Id"]
+        
         thissensor = Sensor.where( {:sensor_name => row["detector-Id"].chomp.gsub(" ","") }).at(0)
         if thissensor == nil 
           puts row["detector-Id"]
         else 
+          sp = LaneSpeed.new
+          sp.time = row["local-time"]
+          sp.lane_number = row["lane-Id"]
           sp.sensor_id = thissensor.id
-          ct.sensor_id = thissensor.id
           sp.speed = row["lane-speed"]
           sp.save
+
+          ct = LaneCount.new
+          ct.time = row["local-time"]
+          ct.lane_number = row["lane-Id"]
+          ct.sensor_id = thissensor.id
           ct.counts = row["lane-count"]
           ct.save
         end
         
-
         if LaneSpeed.count%100 == 0
           puts LaneSpeed.count.to_s
         end

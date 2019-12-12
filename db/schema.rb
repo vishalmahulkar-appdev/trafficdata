@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_121650) do
+ActiveRecord::Schema.define(version: 2019_12_12_172358) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -78,13 +78,13 @@ ActiveRecord::Schema.define(version: 2019_12_12_121650) do
     t.integer "requestor_id"
     t.integer "speed_range_lower_limt"
     t.integer "speed_range_upper_limit"
-    t.integer "sensor_id"
     t.float "bounding_box_latitude_1"
     t.float "bounding_box_latitude_2"
     t.float "bounding_box_longitude_1"
     t.float "bounding_box_longitude_2"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "sensor_list"
   end
 
   create_table "sensor_types", force: :cascade do |t|
