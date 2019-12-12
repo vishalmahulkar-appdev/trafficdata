@@ -9,7 +9,7 @@ class SensorsController < ApplicationController
   end
 
   def show_sensor_list
-    @sensors = Sensor.all
+    @sensors = Sensor.all.order({ :created_at => :desc })
     render({ :template => "sensors/show_sensor_list.html.erb" })
   end
 
@@ -21,24 +21,23 @@ class SensorsController < ApplicationController
   def show
     the_id = params.fetch("id_from_path")
     @sensor = Sensor.where({:id => the_id }).at(0)
-
+    @sensortypes = SensorType.all
     render({ :template => "sensors/show.html.erb" })
   end
 
   def create
     @sensor = Sensor.new
     @sensor.type_id = params.fetch("type_id_from_query")
-    @sensor.location_id = params.fetch("location_id_from_query")
     @sensor.sensor_name = params.fetch("sensor_name_from_query")
     @sensor.operational_status = params.fetch("operational_status_from_query", false)
     @sensor.latitude = params.fetch("latitude_from_query")
-    @sensor.longitude = params.fetch("longitude_from_query")
+    @sensor.longitude = params.fetch("longitude_from_query")   
 
     if @sensor.valid?
       @sensor.save
-      redirect_to("/sensors", { :notice => "Sensor created successfully." })
+      redirect_to("/show_sensor_list", { :notice => "Sensor created successfully." })
     else
-      redirect_to("/sensors", { :notice => "Sensor failed to create successfully." })
+      redirect_to("/show_sensor_list", { :notice => "Sensor failed to create successfully." })
     end
   end
 
@@ -47,7 +46,6 @@ class SensorsController < ApplicationController
     @sensor = Sensor.where({ :id => the_id }).at(0)
 
     @sensor.type_id = params.fetch("type_id_from_query")
-    @sensor.location_id = params.fetch("location_id_from_query")
     @sensor.sensor_name = params.fetch("sensor_name_from_query")
     @sensor.operational_status = params.fetch("operational_status_from_query", false)
     @sensor.latitude = params.fetch("latitude_from_query")
@@ -67,6 +65,6 @@ class SensorsController < ApplicationController
 
     @sensor.destroy
 
-    redirect_to("/sensors", { :notice => "Sensor deleted successfully."} )
+    redirect_to("/show_sensor_list", { :notice => "Sensor deleted successfully."} )
   end
 end

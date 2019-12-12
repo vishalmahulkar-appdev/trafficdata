@@ -65,7 +65,11 @@
         </td>
 
         <td>
-          <%= sensor.operational_status %>
+          <% if sensor.operational_status %>
+            Operational
+          <% else %>
+            Unknown
+          <% end %>
         </td>
 
         <td>

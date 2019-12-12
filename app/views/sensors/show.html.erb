@@ -1,12 +1,28 @@
+<head>
+  <script>
+  // Initialize and add the map
+  function initMap() {
+    // The location of Uluru
+    var uluru = {lat: <%= @sensor.latitude %>, lng: <%= @sensor.longitude %>};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 13, center: uluru});
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
+    
+  }
+  </script>
+</head>
+
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <h1>
-      Sensor #<%= @sensor.id %> details
+      Sensor details
     </h1>
 
     <div class="row mb-3">
       <div class="col">
-        <a href="/sensors" class="btn btn-block btn-outline-secondary">
+        <a href="/show_sensor_list" class="btn btn-block btn-outline-secondary">
           Go back
         </a>
       </div>
@@ -18,63 +34,65 @@
       </div>
     </div>
 
-    <dl>
-      <dt>
-        Type
-      </dt>
-      <dd>
-        <%= @sensor.type_id %>
-      </dd>
+    <div class="row mb-3">
+      <div class="col">
+        <dl>
+          <dt>
+            Sensor name
+          </dt>
+          <dd>
+            <%= @sensor.sensor_name %>
+          </dd>
 
-      <dt>
-        Location
-      </dt>
-      <dd>
-        <%= @sensor.location_id %>
-      </dd>
+          <dt>
+            Sensor Type
+          </dt>
+          <dd>
+            <%= @sensor.type.sensor_type %>
+          </dd>
 
-      <dt>
-        Sensor name
-      </dt>
-      <dd>
-        <%= @sensor.sensor_name %>
-      </dd>
+          <dt>
+            Location [Lat, Long]
+          </dt>
+          <dd>
+            [<%= @sensor.latitude %>, <%= @sensor.longitude %>]
+          </dd>
 
-      <dt>
-        Operational status
-      </dt>
-      <dd>
-        <%= @sensor.operational_status %>
-      </dd>
+          <dt>
+            Operational status
+          </dt>
+          <dd>
+            <% if @sensor.operational_status %>
+              Operational
+            <% else %>
+              Unknown
+            <% end %>
+          </dd>
 
-      <dt>
-        Latitude
-      </dt>
-      <dd>
-        <%= @sensor.latitude %>
-      </dd>
+          <dt>
+            Created at
+          </dt>
+          <dd>
+            <%= time_ago_in_words(@sensor.created_at) %> ago
+          </dd>
 
-      <dt>
-        Longitude
-      </dt>
-      <dd>
-        <%= @sensor.longitude %>
-      </dd>
+          <dt>
+            Updated at
+          </dt>
+          <dd>
+            <%= time_ago_in_words(@sensor.updated_at) %> ago
+          </dd>
+        </dl>
+      </div>
 
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@sensor.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@sensor.updated_at) %> ago
-      </dd>
-    </dl>
+      <div class="col">
+        <div id="map">
+          <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78&libraries=places&callback=initMap">
+          </script>
+        </div> 
+      </div>
+    </div>
   </div>
 </div>
 
@@ -87,21 +105,63 @@
       Edit sensor
     </h2>
 
+    <!-- add sensor types popup -->
+    
+    <a href="#" data-toggle="modal" data-target="#exampleModal">Add new sensor type</a>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add new sensor type</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/insert_sensor_type" method="post">
+              <div class="form-group">
+                <label for="sensor_type_box">
+                  Sensor type
+                </label>
+
+                <input type="text" id="sensor_type_box" name="sensor_type_from_query" class="form-control">
+                <input type="hidden" name="sensor_id_from_query" class="form-control" value="<%= @sensor.id %>">
+              </div>
+
+              <button class="btn btn-block btn-primary">
+                Create sensor type
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+
+
+    <!-- end add sensor types popup -->
+
     <form action="/modify_sensor/<%= @sensor.id %>"  method="post" >
       <div class="form-group">
         <label for="type_id_box">
           Type
         </label>
+        <select id="type_id_box" name="type_id_from_query" class="form-control">
+          <option value="" disabled hidden>Choose here</option>
+          <% @sensortypes.each do |thistype| %>
+            <% if thistype.sensor_type == @sensor.type.sensor_type %>
+              <option selected="selected" value="<%= thistype.id %>"><%= thistype.sensor_type %></option>
+            <% else %>
+              <option value="<%= thistype.id %>"><%= thistype.sensor_type %></option>
+            <% end %>
+          <% end %>
+        </select>
 
-        <input type="text" id="type_id_box" name="type_id_from_query" class="form-control" value="<%= @sensor.type_id %>">
-      </div>
-
-      <div class="form-group">
-        <label for="location_id_box">
-          Location
-        </label>
-
-        <input type="text" id="location_id_box" name="location_id_from_query" class="form-control" value="<%= @sensor.location_id %>">
+        
       </div>
 
       <div class="form-group">
@@ -110,13 +170,6 @@
         </label>
 
         <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control" value="<%= @sensor.sensor_name %>">
-      </div>
-
-      <div class="custom-control custom-checkbox mb-3">
-        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1" <%= "checked" if @sensor.operational_status %>>
-
-        <label class="custom-control-label"
-          for="operational_status_box">Operational status</label>
       </div>
 
       <div class="form-group">
@@ -134,6 +187,15 @@
 
         <input type="text" id="longitude_box" name="longitude_from_query" class="form-control" value="<%= @sensor.longitude %>">
       </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="operational_status_box" name="operational_status_from_query" value="1" <%= "checked" if @sensor.operational_status %>>
+
+        <label class="custom-control-label"
+          for="operational_status_box">Operational status</label>
+      </div>
+
+      
 
       <button class="btn btn-block btn-outline-secondary">
         Update sensor

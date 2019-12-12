@@ -9,7 +9,6 @@
 #  sensor_name        :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  location_id        :integer
 #  type_id            :integer
 #
 
@@ -18,5 +17,4 @@ class Sensor < ApplicationRecord
   has_many :volumes, :class_name => "LaneCount", :dependent => :destroy
   has_many :requests, :dependent => :destroy
   belongs_to :type, :class_name => "SensorType"
-  belongs_to :location
 end

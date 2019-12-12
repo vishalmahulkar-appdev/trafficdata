@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_034732) do
+ActiveRecord::Schema.define(version: 2019_12_12_121650) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2019_12_12_034732) do
 
   create_table "sensors", force: :cascade do |t|
     t.integer "type_id"
-    t.integer "location_id"
     t.string "sensor_name"
     t.boolean "operational_status"
     t.float "latitude"

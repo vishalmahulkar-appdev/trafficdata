@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   match("/", { :controller => "traffic_managers", :action => "index", :via => "get" })
 
-    #------------------------------
+  #------------------------------
 
   # Routes for signing up
   match("/traffic_manager_sign_up", { :controller => "traffic_managers", :action => "new_registration_form", :via => "get"})
@@ -25,6 +25,46 @@ Rails.application.routes.draw do
   match("/cancel_traffic_manager_account", { :controller => "traffic_managers", :action => "destroy", :via => "get"})
 
 
+  #------------------------------
+
+  # Routes for the Sensor resource:
+
+  # CREATE
+  match("/add_new_sensor_page", { :controller => "sensors", :action => "add_sensor_page", :via => "get"})
+  match("/insert_sensor", { :controller => "sensors", :action => "create", :via => "post"})
+          
+  # READ
+  match("/sensors", { :controller => "sensors", :action => "index", :via => "get"})
+  match("/show_sensor_list", { :controller => "sensors", :action => "show_sensor_list", :via => "get"}) 
+  match("/sensors/:id_from_path", { :controller => "sensors", :action => "show", :via => "get"})
+  
+  # UPDATE
+  match("/modify_sensor/:id_from_path", { :controller => "sensors", :action => "update", :via => "post"})
+  
+  # DELETE
+  match("/delete_sensor/:id_from_path", { :controller => "sensors", :action => "destroy", :via => "get"})
+
+
+  #------------------------------
+
+  # Routes for the Sensor type resource:
+
+  # CREATE
+  match("/insert_sensor_type", { :controller => "sensor_types", :action => "create", :via => "post"})
+          
+  # READ
+  match("/sensor_types", { :controller => "sensor_types", :action => "index", :via => "get"})
+  match("/sensor_types/:id_from_path", { :controller => "sensor_types", :action => "show", :via => "get"})
+  
+  # UPDATE
+  #match("/modify_sensor_type/:id_from_path", { :controller => "sensor_types", :action => "update", :via => "post"})
+  
+  # DELETE
+  match("/delete_sensor_type/:id_from_path", { :controller => "sensor_types", :action => "destroy", :via => "get"})
+
+  
+
+  #------------------------------
 
   # Routes for the Lane resource:
 
@@ -67,59 +107,21 @@ Rails.application.routes.draw do
   # Routes for the Location resource:
 
   # CREATE
-  match("/insert_location", { :controller => "locations", :action => "create", :via => "post"})
+  #match("/insert_location", { :controller => "locations", :action => "create", :via => "post"})
           
   # READ
-  match("/locations", { :controller => "locations", :action => "index", :via => "get"})
+  #match("/locations", { :controller => "locations", :action => "index", :via => "get"})
   
-  match("/locations/:id_from_path", { :controller => "locations", :action => "show", :via => "get"})
+  #match("/locations/:id_from_path", { :controller => "locations", :action => "show", :via => "get"})
   
   # UPDATE
   
-  match("/modify_location/:id_from_path", { :controller => "locations", :action => "update", :via => "post"})
+  #match("/modify_location/:id_from_path", { :controller => "locations", :action => "update", :via => "post"})
   
   # DELETE
-  match("/delete_location/:id_from_path", { :controller => "locations", :action => "destroy", :via => "get"})
+  #match("/delete_location/:id_from_path", { :controller => "locations", :action => "destroy", :via => "get"})
 
-  #------------------------------
-
-  # Routes for the Sensor type resource:
-
-  # CREATE
-  match("/insert_sensor_type", { :controller => "sensor_types", :action => "create", :via => "post"})
-          
-  # READ
-  match("/sensor_types", { :controller => "sensor_types", :action => "index", :via => "get"})
   
-  match("/sensor_types/:id_from_path", { :controller => "sensor_types", :action => "show", :via => "get"})
-  
-  # UPDATE
-  
-  match("/modify_sensor_type/:id_from_path", { :controller => "sensor_types", :action => "update", :via => "post"})
-  
-  # DELETE
-  match("/delete_sensor_type/:id_from_path", { :controller => "sensor_types", :action => "destroy", :via => "get"})
-
-  #------------------------------
-
-  # Routes for the Sensor resource:
-
-  # CREATE
-  match("/add_new_sensor_page", { :controller => "sensors", :action => "add_sensor_page", :via => "get"})
-  match("/insert_sensor", { :controller => "sensors", :action => "create", :via => "post"})
-          
-  # READ
-  match("/sensors", { :controller => "sensors", :action => "index", :via => "get"})
-  match("/show_sensor_list", { :controller => "sensors", :action => "show_sensor_list", :via => "get"}) 
-  match("/sensors/:id_from_path", { :controller => "sensors", :action => "show", :via => "get"})
-  
-  # UPDATE
-  
-  match("/modify_sensor/:id_from_path", { :controller => "sensors", :action => "update", :via => "post"})
-  
-  # DELETE
-  match("/delete_sensor/:id_from_path", { :controller => "sensors", :action => "destroy", :via => "get"})
-
   #------------------------------
 
   # Routes for the Request resource:
