@@ -95,12 +95,14 @@
               <a class="nav-link" href="#">Request History</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Account</a>
+              <a class="nav-link" href="edit_traffic_manager">Account</a>
             </li>
           <% end %>
         </ul>
         <span class="nav-link">
-          Welcome <%= @current_traffic_manager.first_name %>
+          <% if @current_traffic_manager != nil %>      
+            Welcome <%= @current_traffic_manager.first_name %>
+          <% end %>
         </span>
         <form class="form-inline" action="/traffic_manager_sign_in">
           <% if @current_traffic_manager == nil %>
@@ -112,6 +114,34 @@
       </div>
     </nav>
 
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+          
+        </div>
+        <div class="col-md-auto">
+          <%= notice %>
+        </div>
+        <div class="col col-lg-2">
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+          
+        </div>
+        <div class="col-md-auto">
+          <%= alert %>
+        </div>
+        <div class="col col-lg-2">
+          
+        </div>
+      </div>
+    </div>
+    
     <br>
     <%= yield %>
   </body>
