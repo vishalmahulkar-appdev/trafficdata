@@ -10,4 +10,5 @@
 
 class SensorType < ApplicationRecord
   has_many :sensors, :foreign_key => "type_id", :dependent => :destroy
+  validates :sensor_type, :presence => true
 end

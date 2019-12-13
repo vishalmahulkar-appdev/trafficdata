@@ -20,7 +20,7 @@ class SensorTypesController < ApplicationController
       @sensor_type.save
       redirect_to("/add_new_sensor_page", { :notice => "Sensor type created successfully." })
     else
-      redirect_to("", { :notice => "Sensor type failed to create successfully." })
+      redirect_to("/sensor_types", { :notice => "Sensor type failed to create successfully." })
     end
   end
 
