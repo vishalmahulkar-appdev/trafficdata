@@ -13,7 +13,7 @@
           Sensor Type 
         </label>
 
-        <select id="type_id_box" name="type_id_from_query" class="form-control">
+        <select id="type_id_box" name="type_id_from_query" class="form-control" required>
           <option value="" selected disabled hidden>Choose here</option>
           <% @sensortypes.each do |thistype| %>
             <option value="<%= thistype.id %>"><%= thistype.sensor_type %></option>
@@ -27,7 +27,7 @@
           Sensor name
         </label>
 
-        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control">
+        <input type="text" id="sensor_name_box" name="sensor_name_from_query" class="form-control" required>
       </div>
 
       <div class="form-group">
@@ -35,7 +35,7 @@
           Latitude
         </label>
 
-        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control">
+        <input type="text" id="latitude_box" name="latitude_from_query" class="form-control" required>
       </div>
 
       <div class="form-group">
@@ -43,7 +43,7 @@
           Longitude
         </label>
 
-        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control">
+        <input type="text" id="longitude_box" name="longitude_from_query" class="form-control" required>
       </div>
 
       <div class="custom-control custom-checkbox mb-3">
