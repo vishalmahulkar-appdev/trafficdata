@@ -35,7 +35,7 @@ namespace :import do
           s.type_id = SensorType.where( {:sensor_type => row["detector-type"]} ).at(0).id 
           s.latitude = row["latitude"].to_i/1000000.0
           s.longitude = row["longitude"].to_i/1000000.0
-          s.location_id = Location.where( {:latitude => row["latitude"], :longitude => row["longitude"]} ).at(0).id
+          #s.location_id = Location.where( {:latitude => row["latitude"], :longitude => row["longitude"]} ).at(0).id
           s.sensor_name = row["detector-Id"].chomp.gsub(" ","")
           s.operational_status = true
           s.save 
