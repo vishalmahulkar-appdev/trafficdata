@@ -20,7 +20,9 @@
 
 class Request < ApplicationRecord
   belongs_to :requestor, :class_name => "TrafficManager"
-
+  validates :data_tag, :bounding_box_latitude_1, :bounding_box_latitude_2, :bounding_box_longitude_1, :bounding_box_longitude_2, presence: true 
+  validates :bounding_box_latitude_1, :bounding_box_latitude_2, :bounding_box_longitude_1, :bounding_box_longitude_2, numericality: true
+  validates :speed_range_lower_limt, :speed_range_upper_limit, numericality: true
   serialize :sensor_list
 
   def get_sensor_ids
