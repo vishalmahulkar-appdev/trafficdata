@@ -81,7 +81,7 @@ namespace :import do
           ct.save
         end
         
-        if LaneSpeed.count%10 == 0
+        if LaneSpeed.count%1000 == 0
           puts counter
         end
       end
