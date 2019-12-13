@@ -48,36 +48,42 @@ namespace :import do
   task speeds: :environment do
     require "csv"
 
-    csv_text = File.read(Rails.root.join("public", "data", "SpeedDataClean-20191205.csv"))
+    csv_text = File.read(Rails.root.join("public", "data", "DataReduced-20191205.csv"))
     csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
 
     counter = 0
     csv.each do |row|
       counter = counter + 1
-      if counter > 152646
-
-        
+      if counter > 0 
         thissensor = Sensor.where( {:sensor_name => row["detector-Id"].chomp.gsub(" ","") }).at(0)
         if thissensor == nil 
           puts row["detector-Id"]
         else 
           sp = LaneSpeed.new
-          sp.time = row["local-time"]
+          sp.time_tag = row["local-time"]
           sp.lane_number = row["lane-Id"]
           sp.sensor_id = thissensor.id
-          sp.speed = row["lane-speed"]
+          if row["lane-speed"] == nil 
+            sp.speed = 0
+          else 
+            sp.speed = row["lane-speed"]
+          end 
           sp.save
 
           ct = LaneCount.new
-          ct.time = row["local-time"]
+          ct.time_tag = row["local-time"]
           ct.lane_number = row["lane-Id"]
           ct.sensor_id = thissensor.id
-          ct.counts = row["lane-count"]
+          if row["lane-count"] == nil 
+            ct.counts = 0
+          else
+            ct.counts = row["lane-count"]
+          end
           ct.save
         end
         
-        if LaneSpeed.count%100 == 0
-          puts LaneSpeed.count.to_s
+        if LaneSpeed.count%10 == 0
+          puts counter
         end
       end
     end

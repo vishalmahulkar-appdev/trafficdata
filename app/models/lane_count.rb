@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  counts      :integer
 #  lane_number :integer
-#  time        :datetime
+#  time_tag    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  lane_id     :integer

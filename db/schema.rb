@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_042118) do
+ActiveRecord::Schema.define(version: 2019_12_13_052259) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 2019_12_13_042118) do
     t.integer "lane_id"
     t.integer "counts"
     t.integer "lane_number"
-    t.datetime "time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "time_tag"
   end
 
   create_table "lane_speeds", force: :cascade do |t|
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 2019_12_13_042118) do
     t.integer "lane_id"
     t.integer "speed"
     t.integer "lane_number"
-    t.datetime "time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "time_tag"
   end
 
   create_table "lanes", force: :cascade do |t|
