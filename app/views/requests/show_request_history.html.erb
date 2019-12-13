@@ -1,3 +1,13 @@
+<div class="row mb-3">
+  <div class="mx-auto">
+    <h2>  List of past Requests</h2>
+  </div>
+</div>
+<ul style="list-style-type:none;"> 
+  <li>
+    <a href="/requests">Another request</a>
+  </li>
+</ul>
 
 <hr>
 <div class="row mb-3">
@@ -29,7 +39,7 @@
         </th>
 
         <th>
-          Sensor
+          Sensor List
         </th>
 
         <th>
@@ -75,7 +85,7 @@
         </td>
 
         <td>
-          <%= request.requestor_id %>
+          <%= request.requestor.first_name+" "+request.requestor.last_name %>
         </td>
 
         <td>
@@ -87,7 +97,7 @@
         </td>
 
         <td>
-          <%= request.sensor_id %>
+          <%= request.sensor_list %>
         </td>
 
         <td>

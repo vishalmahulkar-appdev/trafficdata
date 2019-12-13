@@ -8,6 +8,11 @@ class RequestsController < ApplicationController
     render({ :template => "requests/index.html.erb" })
   end
 
+  def request_history
+    @requests = Request.all.order({ :created_at => :desc })
+    render({ :template => "requests/show_request_history.html.erb" })
+  end
+
   def show
     the_id = params.fetch("id_from_path")
     @request = Request.where({:id => the_id }).at(0)
@@ -22,15 +27,31 @@ class RequestsController < ApplicationController
     @request.requestor_id = params.fetch("requestor_id_from_query")
     @request.speed_range_lower_limt = params.fetch("speed_range_lower_limt_from_query")
     @request.speed_range_upper_limit = params.fetch("speed_range_upper_limit_from_query")
-    @request.sensor_id = params.fetch("sensor_id_from_query")
     @request.bounding_box_latitude_1 = params.fetch("bounding_box_latitude_1_from_query")
     @request.bounding_box_latitude_2 = params.fetch("bounding_box_latitude_2_from_query")
     @request.bounding_box_longitude_1 = params.fetch("bounding_box_longitude_1_from_query")
     @request.bounding_box_longitude_2 = params.fetch("bounding_box_longitude_2_from_query")
 
+    lat_north = @request.bounding_box_latitude_1
+    lat_south = @request.bounding_box_latitude_2
+    lon_west  = @request.bounding_box_longitude_1
+    lon_east  = @request.bounding_box_longitude_2
+
+    @selected_sensors = Sensor.all.pluck(:id, :latitude, :longitude).select{ |(x,y)| x > lat_south && x < lat_north && y > lon_west && y < lon_east}
+    
+    id_list = Array.new
+    if @selected_sensors.count > 0
+      @selected_sensors.each do |thesensor|
+        name = Sensor.where({id => thesensor[0]}).at(0).sensor_name
+        id_list.push(name)
+      end
+    end
+
+    @request.sensor_list = id_list
+
     if @request.valid?
       @request.save
-      redirect_to("/requests", { :notice => "Request created successfully." })
+      redirect_to("/request_history", { :notice => "Request created successfully." })
     else
       redirect_to("/requests", { :notice => "Request failed to create successfully." })
     end
@@ -45,7 +66,6 @@ class RequestsController < ApplicationController
     @request.requestor_id = params.fetch("requestor_id_from_query")
     @request.speed_range_lower_limt = params.fetch("speed_range_lower_limt_from_query")
     @request.speed_range_upper_limit = params.fetch("speed_range_upper_limit_from_query")
-    @request.sensor_id = params.fetch("sensor_id_from_query")
     @request.bounding_box_latitude_1 = params.fetch("bounding_box_latitude_1_from_query")
     @request.bounding_box_latitude_2 = params.fetch("bounding_box_latitude_2_from_query")
     @request.bounding_box_longitude_1 = params.fetch("bounding_box_longitude_1_from_query")

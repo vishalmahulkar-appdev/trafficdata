@@ -19,4 +19,6 @@
 
 class Request < ApplicationRecord
   belongs_to :requestor, :class_name => "TrafficManager"
+
+  serialize :sensor_list
 end

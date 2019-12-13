@@ -37,7 +37,7 @@
         Requestor
       </dt>
       <dd>
-        <%= @request.requestor_id %>
+        <%= @request.requestor.first_name+" "+@request.requestor.last_name %>
       </dd>
 
       <dt>
@@ -55,10 +55,10 @@
       </dd>
 
       <dt>
-        Sensor
+        Sensor List
       </dt>
       <dd>
-        <%= @request.sensor_id %>
+        <%= @request.sensor_list %>
       </dd>
 
       <dt>
@@ -158,10 +158,10 @@
 
       <div class="form-group">
         <label for="sensor_id_box">
-          Sensor
+          Sensor List
         </label>
 
-        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control" value="<%= @request.sensor_id %>">
+        <input type="text" id="sensor_id_box" name="sensor_id_from_query" class="form-control" value="<%= @request.sensor_list %>">
       </div>
 
       <div class="form-group">
