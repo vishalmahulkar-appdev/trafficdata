@@ -58,6 +58,7 @@ class RequestsController < ApplicationController
     @request.bounding_box_latitude_2 = params.fetch("bounding_box_latitude_2_from_query")
     @request.bounding_box_longitude_1 = params.fetch("bounding_box_longitude_1_from_query")
     @request.bounding_box_longitude_2 = params.fetch("bounding_box_longitude_2_from_query")
+    @request.data_tag = params.fetch("data_tag_from_query")
 
     lat_north = @request.bounding_box_latitude_1
     lat_south = @request.bounding_box_latitude_2

@@ -8,6 +8,7 @@
 #  bounding_box_latitude_2  :float
 #  bounding_box_longitude_1 :float
 #  bounding_box_longitude_2 :float
+#  data_tag                 :string
 #  end_time                 :time
 #  sensor_list              :text
 #  speed_range_lower_limt   :integer
