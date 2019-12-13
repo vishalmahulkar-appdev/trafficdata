@@ -28,7 +28,32 @@ class RequestsController < ApplicationController
     @request = Request.where({:id => the_id }).at(0)
     @sensors = Sensor.all
 
-    @data = @request.get_speed_data
+    
+    if @request.data_tag == "Speed"
+      @data = Array.new
+      indata = @request.get_speed_data
+      idx = 0  
+      indata.each do |thisdata|
+        if thisdata.fetch(:speeds).count > 0
+          @data.push(thisdata)
+        end
+      end
+    end
+
+    if @request.data_tag == "Count"
+      @data = Array.new
+      indata = @request.get_count_data
+      idx = 0  
+      indata.each do |thisdata|
+        if thisdata.fetch(:counts).count > 0
+          @data.push(thisdata)
+        end
+      end
+    end
+
+    if @request.data_tag == "SpeedCount"
+      @data = @request.get_speedcount_data
+    end
 
     render({ :template => "requests/show_data_map.html.erb" })
   end
@@ -58,7 +83,17 @@ class RequestsController < ApplicationController
     @request = Request.where({:id => the_id }).at(0)
     @sensors = Sensor.all
 
-    @data = @request.get_speed_data
+    if @request.data_tag == "Speed"
+      @data = @request.get_speed_data
+    end
+
+    if @request.data_tag == "Count"
+      @data = @request.get_count_data
+    end
+
+    if @request.data_tag == "SpeedCount"
+      @data = @request.get_speedcount_data
+    end
 
     render({ :template => "requests/show_data_html.html.erb" })
   end

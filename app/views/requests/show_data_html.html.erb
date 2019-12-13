@@ -1,0 +1,64 @@
+<div class="row mb-3">
+  <div class="mx-auto">
+    <h2>  Data from selected sensors <span class="badge badge-secondary"></h2>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col">
+    <a href="/request_history" class="btn btn-block btn-outline-secondary">
+      Go back
+    </a>
+  </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Sensor name</th>
+      <th scope="col">Location </th>
+      <% if @request.data_tag == "Speed" %>
+        <th scope="col">Time (seconds from 12:00 AM)</th>
+        <th scope="col">Speeds</th>
+      <% end %>
+      <% if @request.data_tag == "Count" %>
+        <th scope="col">Time (seconds from 12:00 AM)</th>
+        <th scope="col">Counts</th>
+      <% end %>
+      <% if @request.data_tag == "SpeedCount" %>
+        <th scope="col">Speed Time</th>
+        <th scope="col">Speeds</th>
+        <th scope="col">Count Time</th>
+        <th scope="col">Counts</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% idx = 1 %>
+    <% @data.each do |thisdata| %>
+    <tr>
+      <th scope="row"><%= idx %></th>
+      <td><%= thisdata.fetch(:sensor_name) %></td>
+      <td width=150px>Lat: <%= thisdata.fetch(:lat) %><br> Lon: <%= thisdata.fetch(:lon) %></td>
+      <% if @request.data_tag == "Speed" %>
+        <td scope="col"><%= thisdata.fetch(:times) %></td>
+        <td scope="col"><%= thisdata.fetch(:speeds) %></td>
+      <% end %>
+      <% if @request.data_tag == "Count" %>
+        <td scope="col"><%= thisdata.fetch(:times) %></td>
+        <td scope="col"><%= thisdata.fetch(:counts) %></td>
+      <% end %>
+      <% if @request.data_tag == "SpeedCount" %>
+        <td scope="col"><%= thisdata.fetch(:speeds_times) %></td>
+        <td scope="col"><%= thisdata.fetch(:speeds) %></td>
+        <td scope="col"><%= thisdata.fetch(:counts_times) %></td>
+        <td scope="col"><%= thisdata.fetch(:counts) %></td>
+      <% end %>
+    </tr>
+    <% idx = idx + 1 %>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<hr>

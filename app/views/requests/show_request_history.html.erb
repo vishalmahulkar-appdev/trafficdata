@@ -17,6 +17,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Data</th>
       <th scope="col">Time range</th>
       <th scope="col">Speed range</th>
       <th scope="col">Sensor list</th>
@@ -29,6 +30,7 @@
     <% @requests.each do |request| %>
     <tr>
       <th scope="row"><%= request.id %></th>
+      <td><%= request.data_tag %></td>
       <td><%= request.begin_time.strftime("%I:%M %p") %> to <%= request.end_time.strftime("%I:%M %p") %></td>
       <td><%= request.speed_range_lower_limt %> - <%= request.speed_range_upper_limit %> km/hr</td>
       <td width=280px>
@@ -108,7 +110,7 @@
             </a>
           </li>
           <li>
-            <a href="/requests/<%= request.id %>">
+            <a href="/requests/<%= request.id %>/table">
               View data (HTML)
             </a>
           </li>
