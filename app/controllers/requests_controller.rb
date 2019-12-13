@@ -10,6 +10,8 @@ class RequestsController < ApplicationController
 
   def request_history
     @requests = Request.all.order({ :created_at => :desc })
+    @sensors = Sensor.all
+    
     render({ :template => "requests/show_request_history.html.erb" })
   end
 
@@ -37,17 +39,10 @@ class RequestsController < ApplicationController
     lon_west  = @request.bounding_box_longitude_1
     lon_east  = @request.bounding_box_longitude_2
 
-    @selected_sensors = Sensor.all.pluck(:id, :latitude, :longitude).select{ |(x,y)| x > lat_south && x < lat_north && y > lon_west && y < lon_east}
+    @selected_sensors = Sensor.all.pluck(:id, :latitude, :longitude).select{ |(i,x,y)| x > lat_south && x < lat_north && y > lon_west && y < lon_east}
     
-    id_list = Array.new
-    if @selected_sensors.count > 0
-      @selected_sensors.each do |thesensor|
-        name = Sensor.where({id => thesensor[0]}).at(0).sensor_name
-        id_list.push(name)
-      end
-    end
-
-    @request.sensor_list = id_list
+    sensor_ids = @selected_sensors.map{|row| row[0]}
+    @request.sensor_list = sensor_ids
 
     if @request.valid?
       @request.save
