@@ -74,9 +74,11 @@ Rails.application.routes.draw do
   match("/request_history", { :controller => "requests", :action => "request_history", :via => "get"})
   
   match("/requests/:id_from_path", { :controller => "requests", :action => "show", :via => "get"})
+  match("/requests/:id_from_path/map", { :controller => "requests", :action => "show_data_map", :via => "get"})
+  match("/requests/:id_from_path/json", { :controller => "requests", :action => "show_data_json", :via => "get"})
+  match("/requests/:id_from_path/html", { :controller => "requests", :action => "show_data_map", :via => "get"})
   
   # UPDATE
-  
   match("/modify_request/:id_from_path", { :controller => "requests", :action => "update", :via => "post"})
   
   # DELETE

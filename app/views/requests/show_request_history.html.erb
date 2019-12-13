@@ -13,7 +13,7 @@
 </div>
 
 <div class="container">
-<table class="table table-striped table-sm">
+<table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -110,6 +110,11 @@
           <li>
             <a href="/requests/<%= request.id %>">
               View data (HTML)
+            </a>
+          </li>
+          <li>
+            <a href="/requests/<%= request.id %>/map">
+              View data (Map)
             </a>
           </li>
         </ul>

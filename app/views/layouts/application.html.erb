@@ -27,7 +27,7 @@
       /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
       #map {
-        height: 70%;
+        height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -60,16 +60,22 @@
           
           
           <% if @current_traffic_manager == nil %>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Sensors</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link disabled dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sensors
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item disabled" href="#">View Sensor Map</a>
+                <a class="dropdown-item disabled" href="#">View Sensor List</a>
+                <a class="dropdown-item disabled" href="#">Add a Sensor</a>
+              </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link disabled dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                View Data
+                Data
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item disabled" href="#">Lane Speeds</a>
-                <a class="dropdown-item disabled" href="#">Lane Counts</a>
+                <a class="dropdown-item disabled" href="#">Generate Request</a>
               </div>
             </li>
             <li class="nav-item">
@@ -79,8 +85,15 @@
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Account</a>
             </li>
           <% else %>
-            <li class="nav-item">
-              <a class="nav-link" href="/sensors">Sensors</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sensors
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/sensors">View Sensor Map</a>
+                <a class="dropdown-item" href="/show_sensor_list">View Sensor List</a>
+                <a class="dropdown-item" href="/add_new_sensor_page">Add a Sensor</a>
+              </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

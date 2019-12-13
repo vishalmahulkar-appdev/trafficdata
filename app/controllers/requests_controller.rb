@@ -18,8 +18,33 @@ class RequestsController < ApplicationController
   def show
     the_id = params.fetch("id_from_path")
     @request = Request.where({:id => the_id }).at(0)
+    @sensors = Sensor.all
 
     render({ :template => "requests/show.html.erb" })
+  end
+
+  def show_data_map
+    the_id = params.fetch("id_from_path")
+    @request = Request.where({:id => the_id }).at(0)
+    @sensors = Sensor.all
+
+    render({ :template => "requests/show_data_map.html.erb" })
+  end
+
+  def show_data_json
+    the_id = params.fetch("id_from_path")
+    @request = Request.where({:id => the_id }).at(0)
+    @sensors = Sensor.all
+
+    render({ :plain => data.as_json })
+  end
+
+  def show_data_html
+    the_id = params.fetch("id_from_path")
+    @request = Request.where({:id => the_id }).at(0)
+    @sensors = Sensor.all
+
+    render({ :template => "requests/show_data_html.html.erb" })
   end
 
   def create
@@ -80,6 +105,6 @@ class RequestsController < ApplicationController
 
     @request.destroy
 
-    redirect_to("/requests", { :notice => "Request deleted successfully."} )
+    redirect_to("/request_history", { :notice => "Request deleted successfully."} )
   end
 end

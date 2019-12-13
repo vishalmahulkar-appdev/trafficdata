@@ -3,18 +3,20 @@
     <h2>  List of currently deployed sensors <span class="badge badge-secondary"></h2>
   </div>
 </div>
+<div class="container">
 <ul style="list-style-type:none;"> 
   <li>
     <a href="/add_new_sensor_page">Add a sensors</a>
   </li>
 </ul>
+</div>
 
-<div class="row mb-3">
+<div class="container">
   <div class="col-md-12">
     <table class="table">
       <tr>
         <th>
-          ID
+          #
         </th>
 
         <th>
@@ -34,11 +36,7 @@
         </th>
 
         <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
+          Created
         </th>
 
         <th>
@@ -57,7 +55,7 @@
         </td>
 
         <td>
-          [<%= sensor.latitude.to_s %>,  <%= sensor.longitude.to_s %>]
+          [<%= sensor.latitude.round(4) %>,  <%= sensor.longitude.round(4) %>]
         </td>
 
         <td>
@@ -72,9 +70,6 @@
           <% end %>
         </td>
 
-        <td>
-          <%= time_ago_in_words(sensor.created_at) %> ago
-        </td>
         <td>
           <%= time_ago_in_words(sensor.updated_at) %> ago
         </td>
