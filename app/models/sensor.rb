@@ -15,6 +15,5 @@
 class Sensor < ApplicationRecord
   has_many :speeds, :class_name => "LaneSpeed", :dependent => :destroy
   has_many :volumes, :class_name => "LaneCount", :dependent => :destroy
-  has_many :requests, :dependent => :destroy
   belongs_to :type, :class_name => "SensorType"
 end

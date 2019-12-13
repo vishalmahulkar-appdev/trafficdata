@@ -75,8 +75,8 @@ class Request < ApplicationRecord
           :sensor_name => Sensor.where( { :id => sensor_id } ).at(0).sensor_name , 
           :lat => Sensor.where( { :id => sensor_id } ).at(0).latitude,
           :lon => Sensor.where( { :id => sensor_id } ).at(0).longitude, 
-          :speeds_times=>LaneCount.where( {:sensor_id => sensor_id } ).pluck(:time_tag),
-          :speeds=>LaneCount.where( {:sensor_id => sensor_id } ).pluck(:speeds),
+          :speeds_times=>LaneSpeed.where( {:sensor_id => sensor_id } ).pluck(:time_tag),
+          :speeds=>LaneSpeed.where( {:sensor_id => sensor_id } ).pluck(:speed),
           :counts_times=>LaneCount.where( {:sensor_id => sensor_id } ).pluck(:time_tag),
           :counts=>LaneCount.where( {:sensor_id => sensor_id } ).pluck(:counts)
         }
