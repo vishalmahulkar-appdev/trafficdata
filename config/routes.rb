@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
   # CREATE
   match("/insert_sensor_type", { :controller => "sensor_types", :action => "create", :via => "post"})
+  match("/insert_sensor_type_modal", { :controller => "sensor_types", :action => "create_modal", :via => "post"})
           
   # READ
   match("/sensor_types", { :controller => "sensor_types", :action => "index", :via => "get"})

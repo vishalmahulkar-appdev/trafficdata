@@ -15,6 +15,18 @@ class SensorTypesController < ApplicationController
   def create
     @sensor_type = SensorType.new
     @sensor_type.sensor_type = params.fetch("sensor_type_from_query")
+
+    if @sensor_type.valid?
+      @sensor_type.save
+      redirect_to("/add_new_sensor_page", { :notice => "Sensor type created successfully." })
+    else
+      redirect_to("", { :notice => "Sensor type failed to create successfully." })
+    end
+  end
+
+  def create_modal
+    @sensor_type = SensorType.new
+    @sensor_type.sensor_type = params.fetch("sensor_type_from_query")
     sid = params.fetch("sensor_id_from_query")
 
     if @sensor_type.valid?
@@ -22,7 +34,7 @@ class SensorTypesController < ApplicationController
       if sid != nil
         redirect_to("/sensors/"+sid.to_s, { :notice => "Sensor type created successfully." })
       else
-        redirect_to("/add_sensor_page", { :notice => "Sensor type created successfully." })
+        redirect_to("/add_new_sensor_page", { :notice => "Sensor type created successfully." })
       end
     else
       redirect_to("", { :notice => "Sensor type failed to create successfully." })
