@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
 
   def index
-    @requests = Request.all.order({ :created_at => :desc })
+    @requests = Request.where({ :requestor_id => @current_traffic_manager.id}).order({ :created_at => :desc })
     @lats = Sensor.pluck(:latitude)
     @lons = Sensor.pluck(:longitude)
     @sensors = Sensor.all
@@ -9,7 +9,8 @@ class RequestsController < ApplicationController
   end
 
   def request_history
-    @requests = Request.all.order({ :created_at => :desc })
+    traffic_manager_id = session[:traffic_manager_id]
+    @requests = Request.where({ :requestor_id => traffic_manager_id}).order({ :created_at => :desc })
     @sensors = Sensor.all
     
     render({ :template => "requests/show_request_history.html.erb" })
@@ -102,7 +103,7 @@ class RequestsController < ApplicationController
     @request = Request.new
     @request.begin_time = params.fetch("begin_time_from_query")
     @request.end_time = params.fetch("end_time_from_query")
-    @request.requestor_id = params.fetch("requestor_id_from_query")
+    @request.requestor_id = session[:traffic_manager_id]
     @request.speed_range_lower_limt = params.fetch("speed_range_lower_limt_from_query")
     @request.speed_range_upper_limit = params.fetch("speed_range_upper_limit_from_query")
     @request.bounding_box_latitude_1 = params.fetch("bounding_box_latitude_1_from_query")
