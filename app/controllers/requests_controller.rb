@@ -28,6 +28,8 @@ class RequestsController < ApplicationController
     @request = Request.where({:id => the_id }).at(0)
     @sensors = Sensor.all
 
+    @data = @request.get_speed_data
+
     render({ :template => "requests/show_data_map.html.erb" })
   end
 
@@ -36,13 +38,27 @@ class RequestsController < ApplicationController
     @request = Request.where({:id => the_id }).at(0)
     @sensors = Sensor.all
 
-    render({ :plain => data.as_json })
+    if @request.data_tag == "Speed"
+      @data = @request.get_speed_data
+    end
+
+    if @request.data_tag == "Count"
+      @data = @request.get_count_data
+    end
+
+    if @request.data_tag == "SpeedCount"
+      @data = @request.get_speedcount_data
+    end
+
+    render({ :json => @data.as_json })
   end
 
   def show_data_html
     the_id = params.fetch("id_from_path")
     @request = Request.where({:id => the_id }).at(0)
     @sensors = Sensor.all
+
+    @data = @request.get_speed_data
 
     render({ :template => "requests/show_data_html.html.erb" })
   end
@@ -60,15 +76,15 @@ class RequestsController < ApplicationController
     @request.bounding_box_longitude_2 = params.fetch("bounding_box_longitude_2_from_query")
     @request.data_tag = params.fetch("data_tag_from_query")
 
-    lat_north = @request.bounding_box_latitude_1
-    lat_south = @request.bounding_box_latitude_2
-    lon_west  = @request.bounding_box_longitude_1
-    lon_east  = @request.bounding_box_longitude_2
+    #lat_north = @request.bounding_box_latitude_1
+    #lat_south = @request.bounding_box_latitude_2
+    #lon_west  = @request.bounding_box_longitude_1
+    #lon_east  = @request.bounding_box_longitude_2
 
-    @selected_sensors = Sensor.all.pluck(:id, :latitude, :longitude).select{ |(i,x,y)| x > lat_south && x < lat_north && y > lon_west && y < lon_east}
+    #@selected_sensors = Sensor.all.pluck(:id, :latitude, :longitude).select{ |(i,x,y)| x > lat_south && x < lat_north && y > lon_west && y < lon_east}
     
-    sensor_ids = @selected_sensors.map{|row| row[0]}
-    @request.sensor_list = sensor_ids
+    #sensor_ids = @selected_sensors.map{|row| row[0]}
+    @request.sensor_list = @request.get_sensor_ids
 
     if @request.valid?
       @request.save
