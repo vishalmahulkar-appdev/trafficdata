@@ -47,7 +47,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'grade_runner', github: 'firstdraft/grade_runner'
   gem 'pry-rails'
-  gem 'sqlite3', '~> 1.4'
+  gem 'sqlite3', '~> 1.4', :group => :development 
   gem 'table_print'
   gem 'web_git', github: 'firstdraft/web_git'
 end
@@ -70,8 +70,8 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
-  gem 'rails_12factor'
+  gem 'pg', "~> 0.18", :group => :production
+  gem 'rails_12factor', :group => :production
 end
 
 gem 'devise'
